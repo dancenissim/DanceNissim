@@ -75,13 +75,14 @@ body{background:var(--bg);color:#ede8de;font-family:var(--f);min-height:100vh}
 .ctype-style{display:inline-flex;align-items:center;gap:3px;font-size:13px;font-weight:700;padding:3px 10px;border-radius:100px}
 .ctype-circle{background:rgba(100,180,255,.12);color:#7ecfff;border:1px solid rgba(100,180,255,.25)}
 .ctype-couple{background:rgba(255,130,180,.12);color:#ffadd6;border:1px solid rgba(255,130,180,.25)}
+.ctype-lines{background:rgba(0,201,167,.1);color:#74f0d5;border:1px solid rgba(0,201,167,.28)}
 /* Language-aware title ordering */
 .ctitles{display:flex;flex-direction:column;gap:2px}
 .ctitle-en{order:1;font-size:15px;font-weight:700;color:#e8e4d8;line-height:1.3}
 .ctitle-he{order:2;font-size:12px;font-weight:400;color:#5a6a82;line-height:1.3;font-family:'Heebo',sans-serif}
 [dir=rtl] .ctitle-he{order:1;font-size:18px;font-weight:700;color:#e8c84a;line-height:1.2}
 [dir=rtl] .ctitle-en{order:2;font-size:12px;font-weight:400;color:#4a5a72}
-.cchoreo{font-size:11px;color:#c9a227;font-weight:600;margin-top:2px;letter-spacing:.2px}
+.cchoreo{font-size:11px;color:#7ecfff;font-weight:600;margin-top:2px;letter-spacing:.2px}
 .chip{font-size:10px;background:rgba(255,255,255,.05);border:1px solid rgba(25,45,69,.8);border-radius:6px;padding:2px 7px;color:#8a9bb5}
 .cmeta{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .cviews{font-size:11px;color:#8a9bb5}
@@ -117,6 +118,22 @@ body{background:var(--bg);color:#ede8de;font-family:var(--f);min-height:100vh}
 .miv{font-size:14px;font-weight:600;color:#ede8de}
 #mDesc{font-size:13px;color:#8a9bb5;line-height:1.7}
 #mSong{font-size:13px;color:#8a9bb5}
+.song-panel{border:1px solid var(--bdr);background:rgba(255,255,255,.03);border-radius:16px;padding:16px}
+.sp-title{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.sp-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:10px}
+.sp-mi{font-size:13px;color:#ede8de}
+.sp-note{font-size:12px;color:#8a9bb5;line-height:1.7;margin-top:4px}
+.lyr-hdr{display:grid;grid-template-columns:1fr 1fr 1fr;background:rgba(201,162,39,.06);border:1px solid rgba(201,162,39,.12);border-radius:12px 12px 0 0;margin-top:12px}
+.lyr-hdr div{padding:8px 14px;font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;border-right:1px solid var(--bdr)}
+.lyr-hdr div:last-child{border-right:none}
+.lyr-body{border:1px solid var(--bdr);border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
+.lyr-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid rgba(25,45,69,.5)}
+.lyr-row:last-child{border-bottom:none}
+.lyr-cell{padding:11px 14px;font-size:13px;line-height:1.6;border-right:1px solid rgba(25,45,69,.5)}
+.lyr-cell:last-child{border-right:none}
+.lc-he{font-family:'Heebo',sans-serif;color:#ede8de}
+.lc-rom{color:#c9a227;font-style:italic}
+.lc-en{color:#8a9bb5}
 #mPairs{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
 .pb{background:rgba(255,255,255,.05);border:1px solid var(--bdr);color:#8a9bb5;border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;transition:all .2s;font-family:var(--f)}
 .pb:hover{border-color:rgba(201,162,39,.4);color:#e8c84a}
@@ -128,7 +145,28 @@ footer{background:var(--bg2);border-top:1px solid var(--bdr);padding:44px 32px;t
 .ft-links a:hover{color:#e8c84a}
 .ft-credit{font-size:11px;color:rgba(138,155,181,.4);margin-top:8px}
 @keyframes cardReveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@media(max-width:600px){#grid{grid-template-columns:1fr 1fr}.nav-row1{flex-wrap:wrap}.nav-search-wrap{order:3;width:100%;max-width:100%}}
+@media(max-width:640px){
+  #stickyNav{padding:0 14px}
+  .nav-row1{flex-wrap:wrap;gap:10px}
+  .nav-logo{min-width:0}
+  .nav-search-wrap{order:3;width:100%;max-width:100%}
+  .nav-right{width:100%;justify-content:space-between}
+  .nav-row2{gap:8px}
+  .nf{flex:1 1 calc(50% - 8px);justify-content:center}
+  .nf-sep{display:none}
+  .nf-choreo-wrap{width:100%;display:grid;grid-template-columns:auto 1fr;gap:8px}
+  .nf-choreo-select{width:100%;min-width:0}
+  .filter-bar{padding:12px 14px}
+  .sort-btn{margin-left:0;width:100%}
+  .res-count{padding:10px 14px 6px;text-align:left}
+  #gridWrap{padding:16px 14px 48px}
+  #grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .lib-page-header{padding:30px 18px 22px}
+  .choreo-section,.filter-bar{padding-left:14px;padding-right:14px}
+  .lyr-hdr,.lyr-row{grid-template-columns:1fr}
+  .lyr-hdr div:not(:first-child),.lyr-cell:not(:first-child){display:none}
+  .lyr-cell{border-right:none}
+}
 </style>
 
 </head>
@@ -276,6 +314,7 @@ footer{background:var(--bg2);border-top:1px solid var(--bdr);padding:44px 32px;t
   </div>
 </div>
 
+<script src="rokdim-data.js"></script>
 <script>
 // ── LANGUAGE TOGGLE ──────────────────────────────────────────────
 let lang='en';
@@ -2234,13 +2273,346 @@ const VD=[
 ["jXaR2mhvu_8","אישה על החוף - מלי ומשה - ריקודי עם מעגלים","Isha Al HaChof","d","36,976","",0,"m",36976]
 ];
 
-const VIDEOS=VD.map(v=>({
-  id:v[0],he:v[1],en:v[2],
-  type:v[3]==='d'?'dance':v[3]==='t'?'teaching':'live',
-  views:v[4],choreo:v[5],year:v[6]||0,style:v[7],vn:v[8],
-  era:v[6]?(v[6]<1970?'classic':v[6]<2000?'golden':'modern'):'modern',
-  song:null,
-}));
+const TITLE_SPELLINGS={
+  'אדון עולם':'Adon Olam',
+  'אישה על החוף':'Isha Al HaChof',
+  'שיבוא':'Sheyavo',
+  'לא לקחתי ללב':'Lo Lakachti LaLev',
+  'שיר לאסף':'Shir LeAsaf',
+  'גשם אהבה':'Geshem Ahava',
+  'חיזורים':'Chizurim',
+  'את ואני':'At VeAni',
+  'רב ברכות':'Rav Brachot',
+  'שושנת ספרד':'Shoshanat Sfarad',
+  'נוף ילדות':'Nof Yaldut',
+  'עץ הזית':'Etz HaZayit',
+  'שיר למענך':'Shir Lemaanech',
+  'שלג על עירי':'Sheleg Al Iri',
+  'אל אלוהי שמים':'El Elohei Shamayim',
+  'ללכת':'Lalechet',
+  'צל עץ תמר':'Tzel Etz Tamar',
+  'אור שבעת הימים':'Or Shivat HaYamim',
+  'אהובתי בת חמישים':'Ahuvati Bat Chamishim',
+  'אברהם אבינו':'Avraham Avinu',
+  'החיים האחרים':'HaChaim HaAcherim',
+  'וואי וואי וואי':'Wai Wai Wai',
+};
+
+const ROKDIM_PAYLOAD=window.ROKDIM_DATA||{matches:{}};
+const ROKDIM_MATCHES=ROKDIM_PAYLOAD.matches||{};
+
+const CHOREO_ALIASES=[
+  {name:'Mali and Moshe',patterns:[/מלי\s*ומשה/u]},
+  {name:'Moshe Eskayo',patterns:[/משה\s*(?:סקיו|אסקיו)/u]},
+  {name:'Nissim Ben-Ami',patterns:[/ניסים(?:\s+בן\s+עמי)?/u,/בן\s+עמי\s+ניסים/u]},
+  {name:'Maor Ben-Ami',patterns:[/מאור\s+בן\s+עמי/u]},
+  {name:'Gadi Bitton',patterns:[/גדי\s+ביטון/u,/(?:^|\s)ג\s+ביטון(?:\s|$)/u]},
+  {name:'Dudu Barzilay',patterns:[/דודו\s+ברזילי/u,/(?:^|\s)ד\s+ברזילי(?:\s|$)/u]},
+  {name:'Ira Weisburd',patterns:[/א(?:יי)?רה\s+ויסברד/u]},
+  {name:'Israel Shiker',patterns:[/ישראל\s+שיקר/u]},
+  {name:'Rafi Ziv',patterns:[/רפי\s+זיו/u,/(?:^|\s)ר\s+זיו(?:\s|$)/u]},
+  {name:'Shlomo Maman',patterns:[/שלמה\s+ממן/u]},
+  {name:'Yoav Ashriel',patterns:[/י(?:ו)?עב\s+אשריאל/u,/יואב\s+אשריאל/u]},
+  {name:'Victor Gabai',patterns:[/ויקטור\s+גבאי/u,/(?:^|\s)ו\s+גבאי(?:\s|$)/u]},
+  {name:'Avner Naim',patterns:[/אבנר\s+נעים/u,/(?:^|\s)א\s+נעים(?:\s|$)/u]},
+  {name:'Oren Shmuel',patterns:[/אורן\s+שמואל/u,/(?:^|\s)א\s+שמואל(?:\s|$)/u]},
+  {name:'Shmulik Gov-Ari',patterns:[/שמוליק\s+גוב\s+ארי/u,/(?:^|\s)ש\s+גוב\s+ארי(?:\s|$)/u]},
+  {name:'Eli Segal',patterns:[/אלי\s+סגל/u]},
+  {name:'Eli Ronen',patterns:[/אלי\s+רונן/u]},
+  {name:'Eliyahu Gamliel',patterns:[/אליהו\s+גמליאל/u,/(?:^|\s)א\s+אליהו(?:\s|$)/u]},
+  {name:'Zeev Malach',patterns:[/ז(?:אב)?\s+(?:מלוך|מולוך)/u]},
+  {name:'Yossi Azrani',patterns:[/יוסי\s+עזרני/u]},
+];
+
+const HEBREW_ROMAN_WORDS={
+  'אדון':'Adon','עולם':'Olam','אישה':'Isha','על':'Al','החוף':'HaChof',
+  'שיר':'Shir','לאסף':'LeAsaf','גשם':'Geshem','אהבה':'Ahava','חיזורים':'Chizurim',
+  'את':'At','ואני':'VeAni','רב':'Rav','ברכות':'Brachot','שושנת':'Shoshanat',
+  'ספרד':'Sfarad','נוף':'Nof','ילדות':'Yaldut','עץ':'Etz','הזית':'HaZayit',
+  'למענך':'Lemaanech','שלג':'Sheleg','עירי':'Iri','אל':'El','אלוהי':'Elohei',
+  'שמים':'Shamayim','ללכת':'Lalechet','צל':'Tzel','תמר':'Tamar','אור':'Or',
+  'שבעת':'Shivat','הימים':'HaYamim','אהובתי':'Ahuvati','בת':'Bat','חמישים':'Chamishim',
+  'אברהם':'Avraham','אבינו':'Avinu','החיים':'HaChaim','האחרים':'HaAcherim',
+  'הבה':'Hava','נגילה':'Nagila','ונשמחה':'VeNismecha','עורו':'Uru','אחים':'Achim',
+  'בלב':'BeLev','שמח':'Sameach'
+};
+
+const HEBREW_ROMAN_CHARS={
+  'א':'','ב':'b','ג':'g','ד':'d','ה':'h','ו':'v','ז':'z','ח':'ch','ט':'t',
+  'י':'y','כ':'k','ך':'k','ל':'l','מ':'m','ם':'m','נ':'n','ן':'n','ס':'s',
+  'ע':'','פ':'p','ף':'p','צ':'tz','ץ':'tz','ק':'k','ר':'r','ש':'sh','ת':'t'
+};
+
+let WORD_TRANSLIT={};
+const NAME_PARTS=new Set([
+  'אבוהב','אביב','אבנר','אוהד','אוחיון','אורן','אייל','אילן','איירה','אלי','אליהו','אלירן','אלעד','אבי','אביו',
+  'ארי','אשריאל','אשכנזי','בועז','ביטון','בן','ברזילי','ברגיל','גבאי','גוב','גדי','גיל','גל','גמליאל','ד','דליה',
+  'דודו','דנה','דנינו','הראל','ויקטור','ויסברד','זאב','זיו','טווילי','טישלר','יואב','יועב','יוסי','יום','יענקלה',
+  'ישראל','כהן','כפיר','לוי','לוסקי','מאור','מוטי','מולוך','מלוך','מליחי','מלכי','מלמד','מלי','משה','מישל','נעים',
+  'נונה','נורית','ניסים','נתן','נטע','סגל','סימן','ספי','עוזרי','עזרני','עטריה','עמי','ענת','פיה','פרץ','צורף','קובי',
+  'בנדיקט','קדמן','ראובן','רוברטו','רונן','רוקח','רפי','שגיא','שוכר','שלמה','שמואל','שמוליק','שם','שבתאי','שלו','שיקר','תמיר','טוב'
+]);
+
+const SONGS={
+  'הבה נגילה':{
+    title:'Hava Nagila',
+    titleHe:'הבה נגילה',
+    performer:'Traditional Israeli',
+    language:'Hebrew',
+    note:'Traditional/public-domain entry.',
+    lyrics:[
+      {he:'הָבָה נָגִילָה',rom:'Hava nagila',en:'Let us rejoice'},
+      {he:'הָבָה נָגִילָה וְנִשְׂמְחָה',rom:'Hava nagila ve-nismecha',en:'Let us rejoice and be happy'},
+      {he:'עוּרוּ עוּרוּ אַחִים',rom:'Uru uru achim',en:'Awaken, awaken, brothers'},
+      {he:'עוּרוּ אַחִים בְּלֵב שָׂמֵחַ',rom:'Uru achim be-lev sameach',en:'Awaken, brothers, with a joyful heart'},
+    ]
+  },
+  'אדון עולם':{
+    title:'Adon Olam',
+    titleHe:'אדון עולם',
+    performer:'Traditional Hebrew liturgical poem',
+    language:'Hebrew',
+    note:'Traditional/public-domain entry.',
+    lyrics:[
+      {he:'אֲדוֹן עוֹלָם אֲשֶׁר מָלַךְ',rom:'Adon olam asher malach',en:'Master of the world, who reigned'},
+      {he:'בְּטֶרֶם כָּל יְצִיר נִבְרָא',rom:'Beterem kol yetzir nivra',en:'Before any creature was created'},
+      {he:'לְעֵת נַעֲשָׂה בְחֶפְצוֹ כֹּל',rom:'Le-et naasah ve-cheftzo kol',en:'When, by His will, all things were made'},
+      {he:'אֲזַי מֶלֶךְ שְׁמוֹ נִקְרָא',rom:'Azai melech shemo nikra',en:'Then His name was proclaimed King'},
+    ]
+  }
+};
+
+function normalizeSpaces(str=''){
+  return String(str||'')
+    .replace(/\u00a0/g,' ')
+    .replace(/[־–—]/g,'-')
+    .replace(/\s*•\s*/g,' • ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+function cleanLatinTitle(str=''){
+  return normalizeSpaces(str)
+    .replace(/\bDancE\b/g,'Dance')
+    .replace(/\bNissim Ben Ami\b/g,'Nissim Ben-Ami');
+}
+
+function titleCaseLatin(str=''){
+  const lower=cleanLatinTitle(str).toLowerCase();
+  return lower
+    .replace(/\b([a-z])/g,(m,c)=>c.toUpperCase())
+    .replace(/\bAnd\b/g,'and')
+    .replace(/\bOf\b/g,'of')
+    .replace(/\bThe\b/g,'the')
+    .replace(/^./,m=>m.toUpperCase());
+}
+
+function inferChoreo(raw, explicit=''){
+  const base=normalizeSpaces(explicit);
+  if(base)return base;
+  const text=normalizeSpaces(raw);
+  for(const alias of CHOREO_ALIASES){
+    if(alias.patterns.some(re=>re.test(text)))return alias.name;
+  }
+  return '';
+}
+
+function inferType(raw, typeCode){
+  const base=typeCode==='d'?'dance':typeCode==='t'?'teaching':'live';
+  const text=normalizeSpaces(raw);
+  if(/בהרקדה|הרקדה/u.test(text))return 'live';
+  if(/לימוד/u.test(text)||/(?:^|\s)ל\s+[מזש](?:\s|$)/u.test(text)||/(?:^|\s)ל[מזש](?:\s|$)/u.test(text)||/(?:^|[ •-])ל(?:$|[ •-])/u.test(text))return 'teaching';
+  if(/ריקוד|ריקודי/u.test(text)||/(?:^|\s)ר\s+[מזש](?:\s|$)/u.test(text)||/(?:^|\s)ר[מזש](?:\s|$)/u.test(text)||/(?:^|[ •-])ר(?:$|[ •-])/u.test(text))return 'dance';
+  return base;
+}
+
+function inferStyle(raw, explicit=''){
+  if(explicit==='m'||explicit==='c'||explicit==='s')return explicit;
+  const text=normalizeSpaces(raw);
+  if(/מעגל(?:ים)?/u.test(text)||/(?:^|\s)[לר]\s+מ(?:\s|$)/u.test(text))return 'm';
+  if(/זוג(?:ות)?/u.test(text)||/(?:^|\s)[לר]\s+ז(?:\s|$)/u.test(text))return 'c';
+  if(/שור(?:ה|ות)/u.test(text)||/(?:^|\s)[לר]\s+ש(?:\s|$)/u.test(text))return 's';
+  if(/(?:^|\s)[לר]מ(?:\s|$)/u.test(text))return 'm';
+  if(/(?:^|\s)[לר]ז(?:\s|$)/u.test(text))return 'c';
+  if(/(?:^|\s)[לר]ש(?:\s|$)/u.test(text))return 's';
+  return '';
+}
+
+function stripKnownChoreo(text=''){
+  let out=text;
+  for(const alias of CHOREO_ALIASES){
+    for(const re of alias.patterns)out=out.replace(re,' ');
+  }
+  return out;
+}
+
+function cleanHebrewTitle(raw=''){
+  const text=normalizeSpaces(raw);
+  if(!text)return '';
+  const segments=text.split(/\s*[•|-]\s*/).map(s=>s.trim()).filter(Boolean);
+  let core=segments[0]||text;
+  if(/^(לימוד|ריקוד|ריקודי|ריקודי עם)$/u.test(core)&&segments[1])core=segments[1];
+  core=stripKnownChoreo(core)
+    .replace(/^(?:לימוד|ריקוד|ריקודי(?: עם)?|בהרקדה(?: של)?|מעגל(?:ים)?|זוג(?:ות)?|שורות|שלשות)\s+/u,'')
+    .replace(/\s+(?:לימוד|ריקוד|ריקודי(?: עם)?|בהרקדה(?: של)?|מעגל(?:ים)?|זוג(?:ות)?|שורות|שלשות)$/u,'')
+    .replace(/(?:^|\s)(?:לימוד|ריקוד|ריקודי(?: עם)?|בהרקדה(?: של)?|מעגל(?:ים)?|זוג(?:ות)?|שורות|שלשות|רוקד(?:ים)?)(?=\s|$)/gu,' ')
+    .replace(/(?:^|\s)[לר]\s+[מזש](?=\s|$)/gu,' ')
+    .replace(/(?:^|\s)[לר][מזש](?=\s|$)/gu,' ')
+    .replace(/\s+(?:ל|ר|מ|ז|ש)$/u,' ')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+  let parts=core.split(/\s+/).filter(Boolean);
+  if(parts.length>=3&&/^[א-ת]$/u.test(parts[parts.length-2]))parts=parts.slice(0,-2);
+  if(parts.length>=4&&/^[א-ת]$/u.test(parts[parts.length-3]))parts=parts.slice(0,-3);
+  core=parts.join(' ').trim();
+  core=core.replace(/\s+[לרמשז]$/u,'').trim();
+  if(!core&&segments.length>1){
+    core=segments.find(seg=>!/^(?:לימוד|ריקוד|ריקודי(?: עם)?|בהרקדה)/u.test(seg))||segments[0];
+  }
+  return core||text;
+}
+
+function isLikelySuffixToken(token=''){
+  return NAME_PARTS.has(token) || /^[א-ת]$/u.test(token);
+}
+
+function canonicalizeHebrewTitle(title, titleSet){
+  const clean=normalizeSpaces(title);
+  const parts=clean.split(' ').filter(Boolean);
+  for(let cut=parts.length-1; cut>=2; cut--){
+    const prefix=parts.slice(0,cut).join(' ');
+    const suffix=parts.slice(cut);
+    if(titleSet.has(prefix)&&suffix.length<=4&&suffix.every(isLikelySuffixToken))return prefix;
+  }
+  return clean;
+}
+
+function transliterateWord(word=''){
+  const clean=word.replace(/["'׳״]/g,'');
+  if(WORD_TRANSLIT[clean])return WORD_TRANSLIT[clean];
+  if(HEBREW_ROMAN_WORDS[clean])return HEBREW_ROMAN_WORDS[clean];
+  let out='';
+  for(const ch of clean){
+    out+=HEBREW_ROMAN_CHARS[ch]!==undefined?HEBREW_ROMAN_CHARS[ch]:ch;
+  }
+  return out ? out.charAt(0).toUpperCase()+out.slice(1) : '';
+}
+
+function transliterateHebrew(str=''){
+  return normalizeSpaces(str)
+    .split(' ')
+    .map(part=>{
+      if(part==='-')return '-';
+      if(/^[A-Za-z0-9]+$/.test(part))return part;
+      return transliterateWord(part);
+    })
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+-\s+/g,' - ');
+}
+
+function isNoisyLatinTitle(title, choreo=''){
+  const text=cleanLatinTitle(title);
+  if(!text)return true;
+  if(choreo&&text.toLowerCase()===choreo.toLowerCase())return true;
+  if(/\bperformed by\b|\bdance by\b|\bclass\b/i.test(text))return true;
+  if(/\bisraeli folk dance\b/i.test(text))return true;
+  if(text.split(' ').length>6&&/\b(with|dance|nissim)\b/i.test(text))return true;
+  return false;
+}
+
+function buildLookup(items, keyFn, valueFn, scoreFn){
+  const map={};
+  items.forEach(item=>{
+    const key=keyFn(item);
+    const value=valueFn(item);
+    if(!key||!value)return;
+    const score=scoreFn(item,value);
+    if(!map[key]||score>map[key].score)map[key]={value,score};
+  });
+  return Object.fromEntries(Object.entries(map).map(([k,v])=>[k,v.value]));
+}
+
+function buildWordLookup(items){
+  const scores={};
+  items.forEach(item=>{
+    if(isNoisyLatinTitle(item.rawEn,item.choreo))return;
+    const heWords=(item.heKey||'').split(/\s+/).filter(Boolean);
+    const enWords=cleanLatinTitle(item.rawEn).split(/\s+/).map(w=>w.replace(/[^A-Za-z']/g,'')).filter(Boolean);
+    if(!heWords.length||heWords.length!==enWords.length||heWords.length>4)return;
+    heWords.forEach((heWord,idx)=>{
+      const enWord=enWords[idx];
+      if(!heWord||!enWord)return;
+      scores[heWord]||={};
+      scores[heWord][enWord]=(scores[heWord][enWord]||0)+(item.vn||0)+1;
+    });
+  });
+  const out={};
+  Object.entries(scores).forEach(([heWord,options])=>{
+    out[heWord]=Object.entries(options).sort((a,b)=>b[1]-a[1])[0][0];
+  });
+  return out;
+}
+
+const BASE_VIDEOS=VD.map(v=>{
+  const rawHe=normalizeSpaces(v[1]);
+  return {
+    id:v[0],
+    rawHe,
+    rawEn:cleanLatinTitle(v[2]),
+    type:inferType(rawHe,v[3]),
+    views:v[4],
+    choreo:inferChoreo(rawHe,v[5]),
+    year:v[6]||0,
+    style:inferStyle(rawHe,v[7]),
+    vn:v[8],
+    heKey:cleanHebrewTitle(rawHe),
+  };
+});
+
+const INITIAL_TITLE_SET=new Set(BASE_VIDEOS.map(v=>v.heKey).filter(Boolean));
+BASE_VIDEOS.forEach(v=>{
+  v.heKey=canonicalizeHebrewTitle(v.heKey,INITIAL_TITLE_SET);
+});
+
+WORD_TRANSLIT=buildWordLookup(BASE_VIDEOS);
+
+const LATIN_BY_HE=buildLookup(
+  BASE_VIDEOS,
+  v=>v.heKey,
+  v=>isNoisyLatinTitle(v.rawEn,v.choreo)?'':titleCaseLatin(v.rawEn),
+  (v,value)=>(v.vn||0)-value.length
+);
+
+const CHOREO_BY_HE=buildLookup(BASE_VIDEOS,v=>v.heKey,v=>v.choreo,v=>v.vn||0);
+const STYLE_BY_HE=buildLookup(BASE_VIDEOS,v=>v.heKey,v=>v.style,v=>v.vn||0);
+
+const VIDEOS=BASE_VIDEOS.map(v=>{
+  const he=v.heKey||v.rawHe||'ללא כותרת';
+  const rokdim=ROKDIM_MATCHES[he]||null;
+  const rom=transliterateHebrew(he);
+  const en=TITLE_SPELLINGS[he]||rokdim?.en||LATIN_BY_HE[he]||rom;
+  const choreo=v.choreo||CHOREO_BY_HE[he]||'';
+  const style=v.style||rokdim?.shape||STYLE_BY_HE[he]||'';
+  const year=v.year||rokdim?.year||0;
+  return {
+    id:v.id,
+    he,
+    en,
+    rom,
+    rawHe:v.rawHe,
+    rawEn:v.rawEn,
+    type:v.type,
+    views:v.views,
+    choreo,
+    year,
+    style,
+    vn:v.vn,
+    era:year?(year<1970?'classic':year<2000?'golden':'modern'):'modern',
+    song:SONGS[he]||null,
+    searchText:`${he} ${en} ${rom} ${v.rawHe} ${v.rawEn} ${choreo}`.toLowerCase(),
+  };
+});
 
 document.getElementById('navCnt').textContent=`${VIDEOS.length.toLocaleString()} videos`;
 
@@ -2312,7 +2684,9 @@ function setChoreo(val){
 
 // ── STATE ─────────────────────────────────────────────────────────
 let navFilter='all',choreoFilter='',searchQ='',eraFilter='all',sortIdx=0,filtered=[],rendered=0;
-const CHUNK=60;
+function chunkSize(){
+  return window.matchMedia('(max-width: 700px)').matches ? 24 : 60;
+}
 const SORTS=['newest','oldest','popular','az'];
 const SLABELS=['Sort: Newest','Sort: Oldest','Sort: Popular','Sort: A→Z'];
 
@@ -2324,9 +2698,11 @@ function buildCard(v){
     ?'<span class="ctype-style ctype-circle">⭕</span>'
     :v.style==='c'
     ?'<span class="ctype-style ctype-couple">👭</span>'
+    :v.style==='s'
+    ?'<span class="ctype-style ctype-lines">↔</span>'
     :'';
   // choreo now shown as dedicated line
-  const yearChip=v.year?`<span class="chip">${v.year}</span>`:'';
+  const yearChip=v.year?`<span class="chip">Year ${v.year}</span>`:'';
   const thumb=`https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`;
   const d=document.createElement('div');
   d.className='card';
@@ -2372,7 +2748,7 @@ function applyFilters(){
     if(navFilter==='couple'&&v.style!=='c')return false;
     if(eraFilter!=='all'&&v.era!==eraFilter)return false;
     if(choreoFilter&&v.choreo!==choreoFilter)return false;
-    if(searchQ){const b=`${v.he} ${v.en} ${v.choreo}`.toLowerCase();if(!b.includes(searchQ))return false;}
+    if(searchQ&&!v.searchText.includes(searchQ))return false;
     return true;
   });
   const s=SORTS[sortIdx];
@@ -2386,15 +2762,16 @@ function applyFilters(){
 }
 
 function loadMore(){
+  const chunk=chunkSize();
   const grid=document.getElementById('grid');
   const frag=document.createDocumentFragment();
-  filtered.slice(rendered,rendered+CHUNK).forEach((v,i)=>{
+  filtered.slice(rendered,rendered+chunk).forEach((v,i)=>{
     const card=buildCard(v);
-    card.style.animation=`cardReveal .35s ${(i%CHUNK)*.02}s ease both`;
+    card.style.animation=`cardReveal .35s ${(i%chunk)*.02}s ease both`;
     frag.appendChild(card);
   });
   grid.appendChild(frag);
-  rendered+=Math.min(CHUNK,filtered.length-rendered);
+  rendered+=Math.min(chunk,filtered.length-rendered);
 }
 
 const io=new IntersectionObserver(entries=>{
@@ -2412,13 +2789,45 @@ function setEra(e,btn){
   document.querySelectorAll('.eb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');applyFilters();
 }
-function setChoreo(val){choreoFilter=val;applyFilters();}
+function setChoreo(val){
+  choreoFilter=val;
+  document.querySelectorAll('.choreo-card').forEach(c=>{
+    c.classList.toggle('active',c.getAttribute('data-choreo')===val);
+  });
+  const clr=document.getElementById('choreoClear');
+  if(clr)clr.style.display=val?'inline-flex':'none';
+  applyFilters();
+}
 function cycleSort(){sortIdx=(sortIdx+1)%SORTS.length;document.getElementById('sortLbl').textContent=SLABELS[sortIdx];applyFilters();}
 
 let st;
 function doSearch(){clearTimeout(st);st=setTimeout(()=>{searchQ=document.getElementById('q').value.toLowerCase().trim();applyFilters();},200);}
 
 // ── MODAL ────────────────────────────────────────────────────────
+function buildSongHtml(v){
+  if(v.song){
+    const s=v.song;
+    return `<div class="song-panel">
+      <div class="sp-title">🎵 Song Information</div>
+      <div class="sp-meta">
+        <div class="sp-mi"><strong>Song:</strong> ${s.title}${s.titleHe?` · ${s.titleHe}`:''}</div>
+        ${s.performer?`<div class="sp-mi"><strong>Performer:</strong> ${s.performer}</div>`:''}
+      </div>
+      ${s.note?`<div class="sp-note">${s.note}</div>`:''}
+      ${s.lyrics&&s.lyrics.length?`<div class="lyr-hdr"><div>Hebrew</div><div>Phonetic</div><div>English</div></div>
+        <div class="lyr-body">${s.lyrics.map(r=>`<div class="lyr-row">
+          <div class="lyr-cell lc-he">${r.he}</div>
+          <div class="lyr-cell lc-rom">${r.rom}</div>
+          <div class="lyr-cell lc-en">${r.en}</div>
+        </div>`).join('')}</div>`:''}
+    </div>`;
+  }
+  return `<div class="song-panel">
+    <div class="sp-title">🎵 Song Information</div>
+    <div class="sp-note">Lyrics are ready to display here once a song entry is added for this dance.</div>
+  </div>`;
+}
+
 function openModal(v){
   document.getElementById('mIframe').src=`https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1`;
   const typeLabel=v.type==='dance'?'Performance':v.type==='teaching'?'Teaching':'Live Class';
@@ -2426,9 +2835,10 @@ function openModal(v){
   let tags=`<span class="mt ${typeClass}">${typeLabel}</span>`;
   if(v.style==='m')tags+=`<span class="mt mt-s">⭕ מעגלים</span>`;
   if(v.style==='c')tags+=`<span class="mt mt-s">👭 זוגות</span>`;
+  if(v.style==='s')tags+=`<span class="mt mt-s">↔ שורות</span>`;
   document.getElementById('mTags').innerHTML=tags;
   document.getElementById('mHe').textContent=v.he||'';
-  document.getElementById('mRom').textContent='';
+  document.getElementById('mRom').textContent=v.rom&&v.rom!==v.en?v.rom:'';
   document.getElementById('mEn').textContent=v.en||'';
   document.getElementById('mSub').textContent=v.choreo?`Choreography: ${v.choreo}`:'';
   const infos=[];
@@ -2438,7 +2848,7 @@ function openModal(v){
   infos.push({l:'Type',v:typeLabel});
   if(v.era)infos.push({l:'Era',v:v.era==='classic'?'Classic (pre-1970)':v.era==='golden'?'Golden Age (1970–99)':'Modern (2000+)'});
   document.getElementById('mInfo').innerHTML=infos.map(i=>`<div class="mib"><div class="mil">${i.l}</div><div class="miv">${i.v}</div></div>`).join('');
-  document.getElementById('mSong').innerHTML='';
+  document.getElementById('mSong').innerHTML=buildSongHtml(v);
   const heKey=v.he.replace(/[- ·•]+.*/,'').trim();
   const pairs=VIDEOS.filter(p=>p.id!==v.id&&heKey.length>2&&(p.he.startsWith(heKey)||p.he===v.he)).slice(0,4);
   document.getElementById('mPairs').innerHTML=pairs.length
@@ -2471,6 +2881,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
   }
 })();
 applyFilters();
+window.addEventListener('resize',()=>{
+  if(rendered<filtered.length)applyFilters();
+},{passive:true});
 </script>
 </body>
 </html>
