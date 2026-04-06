@@ -1114,7 +1114,7 @@ footer{
     <div class="nav-right">
       <span class="nav-count" id="navCnt"></span>
       <a class="nav-lib-link en" href="library.html">Full Library</a>
-      <a class="nav-lib-link he" style="display:none" href="library.html">הספרייה המלאה</a>
+      <a class="nav-lib-link he" style="display:none" href="library.html?lang=he">הספרייה המלאה</a>
       <button class="nav-lang" id="langBtn" onclick="toggleLang()">
         <span class="en">עברית</span><span class="he" style="display:none">English</span>
       </button>
@@ -1757,15 +1757,32 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 // ── LANGUAGE TOGGLE ──────────────────────────────────────────────
-let lang='en';
-function toggleLang(){
-  lang=lang==='en'?'he':'en';
+let lang='he';
+
+function applyLanguage(){
   document.getElementById('root').setAttribute('dir',lang==='he'?'rtl':'ltr');
   document.querySelectorAll('.he').forEach(el=>el.style.display=lang==='he'?'':'none');
   document.querySelectorAll('.en').forEach(el=>el.style.display=lang==='en'?'':'none');
   document.querySelectorAll('.he-b').forEach(el=>el.style.display=lang==='he'?'block':'none');
   document.querySelectorAll('.en-b').forEach(el=>el.style.display=lang==='en'?'block':'none');
+  syncLibraryLinks();
+  rebuildChoreoSelect();
   updatePreviewSortLabel();
+  rebuildPreviews();
+}
+
+function toggleLang(){
+  lang=lang==='en'?'he':'en';
+  applyLanguage();
+}
+
+function syncLibraryLinks(){
+  document.querySelectorAll('a[href^="library.html"]').forEach(link=>{
+    const url=new URL(link.getAttribute('href'),window.location.href);
+    if(lang==='he')url.searchParams.set('lang','he');
+    else url.searchParams.delete('lang');
+    link.setAttribute('href',`${url.pathname.split('/').pop()}${url.search}${url.hash}`);
+  });
 }
 
 // ── VIDEO DATA ───────────────────────────────────────────────────
@@ -3741,27 +3758,28 @@ const ROKDIM_PAYLOAD=window.ROKDIM_DATA||{matches:{}};
 const ROKDIM_MATCHES=ROKDIM_PAYLOAD.matches||{};
 
 const CHOREO_ALIASES=[
-  {name:'Mali and Moshe',patterns:[/מלי\s*ומשה/u]},
-  {name:'Moshe Eskayo',patterns:[/משה\s*(?:סקיו|אסקיו)/u]},
-  {name:'Nissim Ben-Ami',patterns:[/ניסים(?:\s+בן\s+עמי)?/u,/בן\s+עמי\s+ניסים/u]},
-  {name:'Maor Ben-Ami',patterns:[/מאור\s+בן\s+עמי/u]},
-  {name:'Gadi Bitton',patterns:[/גדי\s+ביטון/u,/(?:^|\s)ג\s+ביטון(?:\s|$)/u]},
-  {name:'Dudu Barzilay',patterns:[/דודו\s+ברזילי/u,/(?:^|\s)ד\s+ברזילי(?:\s|$)/u]},
-  {name:'Ira Weisburd',patterns:[/א(?:יי)?רה\s+ויסברד/u]},
-  {name:'Israel Shiker',patterns:[/ישראל\s+שיקר/u]},
-  {name:'Rafi Ziv',patterns:[/רפי\s+זיו/u,/(?:^|\s)ר\s+זיו(?:\s|$)/u]},
-  {name:'Shlomo Maman',patterns:[/שלמה\s+ממן/u]},
-  {name:'Yoav Ashriel',patterns:[/י(?:ו)?עב\s+אשריאל/u,/יואב\s+אשריאל/u]},
-  {name:'Victor Gabai',patterns:[/ויקטור\s+גבאי/u,/(?:^|\s)ו\s+גבאי(?:\s|$)/u]},
-  {name:'Avner Naim',patterns:[/אבנר\s+נעים/u,/(?:^|\s)א\s+נעים(?:\s|$)/u]},
-  {name:'Oren Shmuel',patterns:[/אורן\s+שמואל/u,/(?:^|\s)א\s+שמואל(?:\s|$)/u]},
-  {name:'Shmulik Gov-Ari',patterns:[/שמוליק\s+גוב\s+ארי/u,/(?:^|\s)ש\s+גוב\s+ארי(?:\s|$)/u]},
-  {name:'Eli Segal',patterns:[/אלי\s+סגל/u]},
-  {name:'Eli Ronen',patterns:[/אלי\s+רונן/u]},
-  {name:'Eliyahu Gamliel',patterns:[/אליהו\s+גמליאל/u,/(?:^|\s)א\s+אליהו(?:\s|$)/u]},
-  {name:'Zeev Malach',patterns:[/ז(?:אב)?\s+(?:מלוך|מולוך)/u]},
-  {name:'Yossi Azrani',patterns:[/יוסי\s+עזרני/u]},
+  {name:'Mali and Moshe',he:'מלי ומשה',patterns:[/מלי\s*ומשה/u]},
+  {name:'Moshe Eskayo',he:'משה אסקיו',patterns:[/משה\s*(?:סקיו|אסקיו)/u]},
+  {name:'Nissim Ben-Ami',he:'ניסים בן עמי',patterns:[/ניסים(?:\s+בן\s+עמי)?/u,/בן\s+עמי\s+ניסים/u]},
+  {name:'Maor Ben-Ami',he:'מאור בן עמי',patterns:[/מאור\s+בן\s+עמי/u]},
+  {name:'Gadi Bitton',he:'גדי ביטון',patterns:[/גדי\s+ביטון/u,/(?:^|\s)ג\s+ביטון(?:\s|$)/u]},
+  {name:'Dudu Barzilay',he:'דודו ברזילי',patterns:[/דודו\s+ברזילי/u,/(?:^|\s)ד\s+ברזילי(?:\s|$)/u]},
+  {name:'Ira Weisburd',he:'איירה ויסברד',patterns:[/א(?:יי)?רה\s+ויסברד/u]},
+  {name:'Israel Shiker',he:'ישראל שיקר',patterns:[/ישראל\s+שיקר/u]},
+  {name:'Rafi Ziv',he:'רפי זיו',patterns:[/רפי\s+זיו/u,/(?:^|\s)ר\s+זיו(?:\s|$)/u]},
+  {name:'Shlomo Maman',he:'שלמה ממן',patterns:[/שלמה\s+ממן/u]},
+  {name:'Yoav Ashriel',he:'יואב אשריאל',patterns:[/י(?:ו)?עב\s+אשריאל/u,/יואב\s+אשריאל/u]},
+  {name:'Victor Gabai',he:'ויקטור גבאי',patterns:[/ויקטור\s+גבאי/u,/(?:^|\s)ו\s+גבאי(?:\s|$)/u]},
+  {name:'Avner Naim',he:'אבנר נעים',patterns:[/אבנר\s+נעים/u,/(?:^|\s)א\s+נעים(?:\s|$)/u]},
+  {name:'Oren Shmuel',he:'אורן שמואל',patterns:[/אורן\s+שמואל/u,/(?:^|\s)א\s+שמואל(?:\s|$)/u]},
+  {name:'Shmulik Gov-Ari',he:'שמוליק גוב-ארי',patterns:[/שמוליק\s+גוב\s+ארי/u,/(?:^|\s)ש\s+גוב\s+ארי(?:\s|$)/u]},
+  {name:'Eli Segal',he:'אלי סגל',patterns:[/אלי\s+סגל/u]},
+  {name:'Eli Ronen',he:'אלי רונן',patterns:[/אלי\s+רונן/u]},
+  {name:'Eliyahu Gamliel',he:'אליהו גמליאל',patterns:[/אליהו\s+גמליאל/u,/(?:^|\s)א\s+אליהו(?:\s|$)/u]},
+  {name:'Zeev Malach',he:'זאב מלוך',patterns:[/ז(?:אב)?\s+(?:מלוך|מולוך)/u]},
+  {name:'Yossi Azrani',he:'יוסי עזרני',patterns:[/יוסי\s+עזרני/u]},
 ];
+const CHOREO_ALIAS_MAP=Object.fromEntries(CHOREO_ALIASES.map(alias=>[alias.name,alias]));
 
 const HEBREW_ROMAN_WORDS={
   'אדון':'Adon','עולם':'Olam','אישה':'Isha','על':'Al','החוף':'HaChof',
@@ -3836,6 +3854,31 @@ function cleanLatinTitle(str=''){
     .replace(/\bNissim Ben Ami\b/g,'Nissim Ben-Ami');
 }
 
+function normalizeChoreoName(name=''){
+  const clean=cleanLatinTitle(name);
+  return CHOREO_ALIAS_MAP[clean]?.name||clean;
+}
+
+function getChoreoHebrew(name=''){
+  return CHOREO_ALIAS_MAP[normalizeChoreoName(name)]?.he||'';
+}
+
+function getChoreoDisplay(choreo){
+  if(!choreo)return '';
+  return lang==='he'?(choreo.he||choreo.en||''):(choreo.en||choreo.he||'');
+}
+
+function getTypeLabel(type, detailed=false){
+  if(lang==='he'){
+    if(type==='dance')return 'ריקוד';
+    if(type==='teaching')return 'לימוד';
+    return detailed?'הרקדה חיה':'הרקדה';
+  }
+  if(type==='dance')return 'Performance';
+  if(type==='teaching')return 'Teaching';
+  return detailed?'Live Class':'Live';
+}
+
 function titleCaseLatin(str=''){
   const lower=cleanLatinTitle(str).toLowerCase();
   return lower
@@ -3847,7 +3890,7 @@ function titleCaseLatin(str=''){
 }
 
 function inferChoreo(raw, explicit=''){
-  const base=normalizeSpaces(explicit);
+  const base=normalizeChoreoName(explicit);
   if(base)return base;
   const text=normalizeSpaces(raw);
   for(const alias of CHOREO_ALIASES){
@@ -3975,7 +4018,7 @@ function buildLookup(items, keyFn, valueFn, scoreFn){
 function buildWordLookup(items){
   const scores={};
   items.forEach(item=>{
-    if(isNoisyLatinTitle(item.rawEn,item.choreo))return;
+    if(isNoisyLatinTitle(item.rawEn,item.choreoEn))return;
     const heWords=(item.heKey||'').split(/\s+/).filter(Boolean);
     const enWords=cleanLatinTitle(item.rawEn).split(/\s+/).map(w=>w.replace(/[^A-Za-z']/g,'')).filter(Boolean);
     if(!heWords.length||heWords.length!==enWords.length||heWords.length>4)return;
@@ -3995,13 +4038,16 @@ function buildWordLookup(items){
 
 const BASE_VIDEOS=VD.map(v=>{
   const rawHe=normalizeSpaces(v[1]);
+  const choreoKey=inferChoreo(rawHe,v[5]);
   return {
     id:v[0],
     rawHe,
     rawEn:cleanLatinTitle(v[2]),
     type:inferType(rawHe,v[3]),
     views:v[4],
-    choreo:inferChoreo(rawHe,v[5]),
+    choreoKey,
+    choreoEn:choreoKey,
+    choreoHe:getChoreoHebrew(choreoKey),
     year:v[6]||0,
     style:inferStyle(rawHe,v[7]),
     vn:v[8],
@@ -4019,11 +4065,11 @@ WORD_TRANSLIT=buildWordLookup(BASE_VIDEOS);
 const LATIN_BY_HE=buildLookup(
   BASE_VIDEOS,
   v=>v.heKey,
-  v=>isNoisyLatinTitle(v.rawEn,v.choreo)?'':titleCaseLatin(v.rawEn),
+  v=>isNoisyLatinTitle(v.rawEn,v.choreoEn)?'':titleCaseLatin(v.rawEn),
   (v,value)=>(v.vn||0)-value.length
 );
 
-const CHOREO_BY_HE=buildLookup(BASE_VIDEOS,v=>v.heKey,v=>v.choreo,v=>v.vn||0);
+const CHOREO_BY_HE=buildLookup(BASE_VIDEOS,v=>v.heKey,v=>v.choreoKey,v=>v.vn||0);
 const STYLE_BY_HE=buildLookup(BASE_VIDEOS,v=>v.heKey,v=>v.style,v=>v.vn||0);
 
 const VIDEOS=BASE_VIDEOS.map(v=>{
@@ -4031,7 +4077,7 @@ const VIDEOS=BASE_VIDEOS.map(v=>{
   const rokdim=ROKDIM_MATCHES[he]||null;
   const rom=transliterateHebrew(he);
   const en=TITLE_SPELLINGS[he]||rokdim?.en||LATIN_BY_HE[he]||rom;
-  const choreo=v.choreo||CHOREO_BY_HE[he]||'';
+  const choreoKey=v.choreoKey||CHOREO_BY_HE[he]||'';
   const style=v.style||rokdim?.shape||STYLE_BY_HE[he]||'';
   const year=v.year||rokdim?.year||0;
   return {
@@ -4043,15 +4089,19 @@ const VIDEOS=BASE_VIDEOS.map(v=>{
     rawEn:v.rawEn,
     type:v.type,
     views:v.views,
-    choreo,
+    choreoKey,
+    choreoEn:choreoKey,
+    choreoHe:v.choreoHe||getChoreoHebrew(choreoKey),
     year,
     style,
     vn:v.vn,
     era:year?(year<1970?'classic':year<2000?'golden':'modern'):'modern',
     song:SONGS[he]||null,
-    searchText:`${he} ${en} ${rom} ${v.rawHe} ${v.rawEn} ${choreo}`.toLowerCase(),
+    searchText:`${he} ${en} ${rom} ${v.rawHe} ${v.rawEn} ${choreoKey} ${getChoreoHebrew(choreoKey)}`.toLowerCase(),
   };
 });
+
+let navFilter='all', choreoFilter='', searchQ='', previewSort='popular';
 
 // ── TYPE COUNTS ──────────────────────────────────────────────────
 const counts={all:VIDEOS.length,dance:0,teaching:0,live:0,circle:0,couple:0};
@@ -4063,14 +4113,23 @@ document.getElementById('navCnt').textContent=`${VIDEOS.length.toLocaleString()}
 
 // ── CHOREOGRAPHER DROPDOWN ────────────────────────────────────────
 (function buildChoreoSelect(){
-  const sel=document.getElementById('choreoSelect');
-  if(!sel)return;
-  const choreos=[...new Set(VIDEOS.map(v=>v.choreo).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'he'));
-  choreos.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o);});
+  rebuildChoreoSelect();
 })();
 
-// ── STATE ─────────────────────────────────────────────────────────
-let navFilter='all', choreoFilter='', searchQ='', previewSort='popular';
+function rebuildChoreoSelect(){
+  const sel=document.getElementById('choreoSelect');
+  if(!sel)return;
+  sel.querySelectorAll('option:not([value=""])').forEach(o=>o.remove());
+  [...new Set(VIDEOS.map(v=>v.choreoKey).filter(Boolean))]
+    .sort((a,b)=>getChoreoDisplay({en:a,he:getChoreoHebrew(a)}).localeCompare(getChoreoDisplay({en:b,he:getChoreoHebrew(b)}),'he'))
+    .forEach(key=>{
+      const o=document.createElement('option');
+      o.value=key;
+      o.textContent=getChoreoDisplay({en:key,he:getChoreoHebrew(key)});
+      sel.appendChild(o);
+    });
+  sel.value=choreoFilter||'';
+}
 
 function updatePreviewSortLabel(){
   const labels=lang==='he'
@@ -4088,7 +4147,7 @@ function cyclePreviewSort(){
 
 // ── CARD BUILDER ─────────────────────────────────────────────────
 function buildCard(v){
-  const typLabel=v.type==='dance'?'Performance':v.type==='teaching'?'Teaching':'Live';
+  const typLabel=getTypeLabel(v.type);
   const typClass=v.type==='dance'?'ctp-dance':v.type==='teaching'?'ctp-teach':'ctp-live';
   const styleHtml=v.style==='m'
     ?'<span class="ctype-style ctype-circle">⭕</span>'
@@ -4119,7 +4178,7 @@ function buildCard(v){
       <div class="ctitles">
         <div class="ctitle-en">${v.en||''}</div>
         <div class="ctitle-he">${v.he||'—'}</div>
-        ${v.choreo?`<div class="cchoreo">✦ ${v.choreo}</div>`:''}
+        ${v.choreoKey?`<div class="cchoreo">✦ ${getChoreoDisplay({en:v.choreoEn,he:v.choreoHe})}</div>`:''}
       </div>
       <div class="cmeta">${yearChip}${songIco}</div>
       ${v.vn>0?`<div class="cviews">👁 ${v.views}</div>`:''}
@@ -4145,7 +4204,7 @@ function videoMatchesFilter(v){
   if(navFilter==='live'&&v.type!=='live')return false;
   if(navFilter==='circle'&&v.style!=='m')return false;
   if(navFilter==='couple'&&v.style!=='c')return false;
-  if(choreoFilter&&v.choreo!==choreoFilter)return false;
+  if(choreoFilter&&v.choreoKey!==choreoFilter)return false;
   if(searchQ&&!v.searchText.includes(searchQ))return false;
   return true;
 }
@@ -4243,7 +4302,7 @@ function buildSongHtml(v){
 
 function openModal(v){
   document.getElementById('mIframe').src=`https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1`;
-  const typeLabel=v.type==='dance'?'Performance':v.type==='teaching'?'Teaching':'Live Class';
+  const typeLabel=getTypeLabel(v.type,true);
   const typeClass=`mt-${v.type==='dance'?'d':v.type==='teaching'?'t':'l'}`;
   let tags=`<span class="mt ${typeClass}">${typeLabel}</span>`;
   if(v.style==='m')tags+=`<span class="mt mt-s">⭕ מעגלים</span>`;
@@ -4253,11 +4312,12 @@ function openModal(v){
   document.getElementById('mHe').textContent=v.he||'';
   document.getElementById('mRom').textContent=v.rom&&v.rom!==v.en?v.rom:'';
   document.getElementById('mEn').textContent=v.en||'';
-  document.getElementById('mSub').textContent=v.choreo?`Choreography: ${v.choreo}`:'';
+  const choreoLabel=getChoreoDisplay({en:v.choreoEn,he:v.choreoHe});
+  document.getElementById('mSub').textContent=choreoLabel?`Choreography: ${choreoLabel}`:'';
   const infos=[];
   if(v.year)infos.push({l:'Year',v:v.year});
   if(v.views)infos.push({l:'Views',v:v.views});
-  if(v.choreo)infos.push({l:'Choreographer',v:v.choreo});
+  if(choreoLabel)infos.push({l:'Choreographer',v:choreoLabel});
   infos.push({l:'Type',v:typeLabel});
   if(v.era)infos.push({l:'Era',v:v.era==='classic'?'Classic (pre-1970)':v.era==='golden'?'Golden Age (1970–99)':'Modern (2000+)'});
   document.getElementById('mInfo').innerHTML=infos.map(i=>`<div class="mib"><div class="mil">${i.l}</div><div class="miv">${i.v}</div></div>`).join('');
@@ -4281,8 +4341,12 @@ function bgClose(e){if(e.target===document.getElementById('mOverlay'))closeModal
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 // ── INIT ─────────────────────────────────────────────────────────
-updatePreviewSortLabel();
-rebuildPreviews();
+(function initLanguage(){
+  const p = new URLSearchParams(window.location.search);
+  const requestedLang = p.get('lang');
+  if(requestedLang==='en'||requestedLang==='he')lang=requestedLang;
+})();
+applyLanguage();
 let previewMode=featuredCount();
 window.addEventListener('resize',()=>{
   const next=featuredCount();
