@@ -203,6 +203,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100v
   grid-column:1/-1;
   display:flex;align-items:center;gap:6px;
   padding:0 0 10px;flex-wrap:wrap;
+  transition:max-height .28s ease,opacity .24s ease,padding .24s ease,border-color .24s ease;
 }
 .nav-logo{text-decoration:none;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .nl-emblem{
@@ -258,6 +259,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100v
   border-color:rgba(201,162,39,.5);
   color:var(--gold2);font-weight:700;
 }
+.nf-sort{display:flex;align-items:center;gap:8px;margin-inline-start:auto}
 .nf-sep{width:1px;height:18px;background:var(--bdr);flex-shrink:0;margin:0 2px}
 .nf-choreo-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .nf-choreo-label{font-size:11px;color:var(--dim);letter-spacing:.8px;text-transform:uppercase}
@@ -274,6 +276,13 @@ body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100v
   border-color:rgba(201,162,39,.4);color:var(--text);
   background-color:rgba(255,255,255,.06);
 }
+.sort-select{
+  background:rgba(255,255,255,.04);border:1px solid rgba(25,45,69,.9);
+  color:var(--text);border-radius:12px;padding:8px 12px;
+  font-size:12px;font-family:var(--f);outline:none;cursor:pointer;
+  min-width:170px;
+}
+.sort-select:focus{border-color:rgba(201,162,39,.45)}
 @media(max-width:768px){
   .nf-choreo-wrap{display:none}
   .nav-row2{padding-bottom:8px;gap:4px}
@@ -953,63 +962,60 @@ footer{
 }
 .tl-year{
   font-size:13px;font-weight:700;color:var(--gold);
-  letter-spacing:.5px;padding-top:2px;text-align:right;
+  letter-spacing:.5px;padding-top:4px;padding-inline-end:12px;text-align:right;
 }
-.tl-content{padding-left:4px}
+.tl-content{padding-left:14px}
 .tl-title{
   font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px;
 }
 .tl-text{font-size:14px;line-height:1.75;color:rgba(237,232,222,.6);font-weight:300}
 
-/* Dance types */
-.dance-types{max-width:1100px;margin:0 auto 56px;padding:0 0}
-.dt-title{
-  font-size:clamp(20px,3vw,28px);font-weight:700;
-  background:linear-gradient(135deg,var(--gold2),var(--gold));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:28px;text-align:center;
-}
-.dt-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:16px;
-}
-.dt-card{
-  background:linear-gradient(145deg,rgba(10,21,37,.9),rgba(7,14,26,.9));
-  border:1px solid rgba(25,45,69,.8);border-radius:16px;
-  padding:24px 22px;transition:border-color .25s,box-shadow .25s;
-}
-.dt-card:hover{
-  border-color:rgba(201,162,39,.3);
-  box-shadow:0 8px 32px rgba(0,0,0,.3),0 0 0 1px rgba(201,162,39,.06);
-}
-.dt-icon{font-size:32px;margin-bottom:12px}
-.dt-name{
-  font-family:'Heebo',sans-serif;font-size:22px;font-weight:700;
-  color:var(--gold2);line-height:1.1;
-}
-.dt-name-en{font-size:13px;color:var(--muted);margin-top:4px;margin-bottom:12px;letter-spacing:.3px}
-.dt-desc{font-size:13px;line-height:1.7;color:rgba(237,232,222,.5);font-weight:300}
-
-/* Quote */
 .history-quote{
-  max-width:700px;margin:0 auto;text-align:center;
-  padding:40px 32px;
-  border-top:1px solid rgba(25,45,69,.6);border-bottom:1px solid rgba(25,45,69,.6);
+  position:relative;
+  max-width:860px;margin:0 auto;text-align:center;
+  padding:56px 36px;border:1px solid rgba(25,45,69,.6);
+  border-radius:28px;overflow:hidden;
+  background:
+    radial-gradient(circle at top left,rgba(201,162,39,.12),transparent 36%),
+    radial-gradient(circle at bottom right,rgba(45,142,240,.12),transparent 32%),
+    linear-gradient(145deg,rgba(7,14,27,.96),rgba(4,8,16,.94));
+}
+.hq-bg{
+  position:absolute;inset:16px;display:flex;align-items:center;justify-content:center;
+  font-family:'Heebo',sans-serif;font-size:clamp(44px,10vw,128px);line-height:.9;
+  font-weight:900;color:rgba(255,255,255,.04);pointer-events:none;user-select:none;
 }
 .hq-text{
+  position:relative;z-index:1;
   font-size:clamp(18px,2.5vw,24px);
   font-weight:300;font-style:italic;
-  color:rgba(237,232,222,.65);line-height:1.6;margin-bottom:14px;
+  color:rgba(237,232,222,.82);line-height:1.6;margin-bottom:14px;
 }
-.hq-attr{font-size:13px;color:var(--gold);letter-spacing:1px}
+.hq-attr{position:relative;z-index:1;font-size:13px;color:var(--gold);letter-spacing:1px}
+.history-sub-prefix,.history-sub-rest{display:block}
+.history-sub-prefix{margin-bottom:4px}
+
+@media(min-width:1100px){
+  .nav-row2{gap:12px}
+  .nav-row2>.nf{flex:1 1 0;justify-content:center}
+  .nf-sort{margin-inline-start:0}
+  .nf-choreo-wrap{margin-inline-start:auto}
+}
 
 @media(max-width:640px){
   .timeline::before{left:0;display:none}
   .tl-item{grid-template-columns:80px 1fr;gap:0 14px}
   .tl-dot{display:none}
-  .tl-year{font-size:12px}
+  .tl-year{font-size:12px;padding-inline-end:8px}
   .history-section,.about-section{padding:52px 20px}
   .preview-section{padding:48px 16px 40px}
+  #stickyNav.filters-collapsed .nav-row2{
+    max-height:0;opacity:0;overflow:hidden;padding-top:0;padding-bottom:0;
+    border-top-color:transparent;pointer-events:none;
+  }
+  .nf-sort,.nf-choreo-wrap{width:100%}
+  .sort-select,.nf-choreo-select{width:100%;min-width:0}
+  .hq-bg{font-size:clamp(36px,18vw,80px)}
 }
 
 /* ══ RESPONSIVE ══════════════════════════════════════════ */
@@ -1066,7 +1072,7 @@ footer{
     <div class="hero-divider"></div>
     <div class="hero-stats">
       <div class="hero-stat">
-        <div class="hero-stat-n">1,940</div>
+        <div class="hero-stat-n">1,070</div>
         <div class="hero-stat-l">Videos</div>
       </div>
       <div class="hero-stat-sep"></div>
@@ -1108,7 +1114,7 @@ footer{
     <div class="nav-search-wrap">
       <span class="nav-search-ico">🔍</span>
       <input class="nav-search" id="q" type="text"
-        placeholder="Search 1,940 dances…"
+        placeholder="Search 1,070 dances…"
         autocomplete="off" oninput="doSearch()">
     </div>
     <div class="nav-right">
@@ -1140,10 +1146,11 @@ footer{
     <button class="nf" data-nf="live" onclick="setNavFilter('live',this)">
       🎭 <span class="en">Live</span><span class="he" style="display:none">הרקדה</span>
     </button>
-    <button class="nf" id="previewSortBtn" onclick="cyclePreviewSort()">
-      ↕ <span id="previewSortLbl">Sort: Popular</span>
-    </button>
-    <div class="nf-sep"></div>
+    <div class="nf-sort">
+      <label class="nf-choreo-label en" for="previewSortSelect">Sort</label>
+      <label class="nf-choreo-label he" style="display:none" for="previewSortSelect">מיון</label>
+      <select class="sort-select" id="previewSortSelect" onchange="setPreviewSort(this.value)"></select>
+    </div>
     <div class="nf-choreo-wrap">
       <span class="nf-choreo-label en">Choreographer</span>
       <select class="nf-choreo-select" id="choreoSelect" onchange="setChoreo(this.value)">
@@ -1185,8 +1192,8 @@ footer{
   <!-- CTA to library.html (shown after 100 are revealed) -->
   <div class="preview-cta-wrap" id="libraryCta" style="display:none">
     <a class="preview-cta" href="library.html">
-      <span class="en">Explore All 1,940 Videos in the Full Library</span>
-      <span class="he" style="display:none">עיין בכל 1,940 הסרטונים בספרייה המלאה</span>
+      <span class="en">Explore All 1,070 Videos in the Full Library</span>
+      <span class="he" style="display:none">עיין בכל 1,070 הסרטונים בספרייה המלאה</span>
       &nbsp;→
     </a>
     <p class="preview-cta-sub en">Searchable · Filterable by type, era & choreographer · Plays in-site</p>
@@ -1209,7 +1216,7 @@ footer{
         <div class="ab">🎓 Master Instructor</div>
         <div class="ab">🎭 50+ Years Teaching</div>
         <div class="ab">📍 Kiryat Yam, Israel</div>
-        <div class="ab">▶ 1,940 Videos Published</div>
+        <div class="ab">▶ 1,070 Videos Published</div>
       </div>
     </div>
     <div class="about-content">
@@ -1293,7 +1300,7 @@ footer{
     <h2 class="section-title en">Israeli Folk Dance — A Living Tradition</h2>
     <h2 class="section-title he" style="display:none" dir="rtl">ריקודי עם ישראלי — מסורת חיה</h2>
     <p class="section-sub en">From the earliest pioneer settlements to the global stage — the story of ריקודי עם</p>
-    <p class="section-sub he" style="display:none" dir="rtl">מן החלוצים, דרך פסטיבלי דליה וכרמיאל, ועד הקהילות שרוקדות היום בכל העולם</p>
+    <p class="section-sub he" style="display:none" dir="rtl"><span class="history-sub-prefix">מן</span><span class="history-sub-rest">החלוצים, דרך פסטיבלי דליה וכרמיאל, ועד הקהילות שרוקדות היום בכל העולם</span></p>
   </div>
   <div class="timeline">
     <div class="tl-item scroll-reveal">
@@ -1337,38 +1344,10 @@ footer{
       </div>
     </div>
   </div>
-  <div class="dance-types scroll-reveal">
-    <h3 class="dt-title en">The Dance Vocabulary</h3>
-    <div class="dt-grid">
-      <div class="dt-card">
-        <div class="dt-icon">⭕</div>
-        <div class="dt-name" dir="rtl">מעגלים</div>
-        <div class="dt-name-en">Circle Dances</div>
-        <div class="dt-desc en">The quintessential Israeli folk form — dancers hold hands in a circle, moving together in unison. The Hora is the most iconic example, symbolizing community and collective celebration.</div>
-      </div>
-      <div class="dt-card">
-        <div class="dt-icon">👭</div>
-        <div class="dt-name" dir="rtl">זוגות</div>
-        <div class="dt-name-en">Couple Dances</div>
-        <div class="dt-desc en">Partner dances weaving individual expression and connection. From romantic ballads to lively social dances, זוגות showcase the full emotional range of Israeli folk music.</div>
-      </div>
-      <div class="dt-card">
-        <div class="dt-icon">🎭</div>
-        <div class="dt-name">הרקדה</div>
-        <div class="dt-name-en">Live Classes</div>
-        <div class="dt-desc en">Live instructional sessions where Nissim leads groups through dances in real time — the closest you can get to being in a community hall in Israel, wherever you are in the world.</div>
-      </div>
-      <div class="dt-card">
-        <div class="dt-icon">🎬</div>
-        <div class="dt-name">ביצוע</div>
-        <div class="dt-name-en">Performances</div>
-        <div class="dt-desc en">Full dance performances filmed for reference — ideal for learning choreography visually, refreshing a dance you know, or simply enjoying the beauty of Israeli folk dance in motion.</div>
-      </div>
-    </div>
-  </div>
   <div class="history-quote scroll-reveal">
-    <div class="hq-text">"Dance is the language of the soul — and Israeli folk dance speaks to the soul of a people."</div>
-    <div class="hq-attr">— The spirit of ריקודי עם</div>
+    <div class="hq-bg" id="quoteBg" aria-hidden="true"></div>
+    <div class="hq-text" id="quoteText"></div>
+    <div class="hq-attr" id="quoteAttr"></div>
   </div>
 </section>
 
@@ -1513,6 +1492,28 @@ footer{
       </a>
     </div>
 
+    <!-- MAOR BEN-AMI -->
+    <div class="ccard">
+      <div class="ccard-head">
+        <div>
+          <div class="ccard-name he-name">מאור בן-עמי</div>
+          <div class="ccard-name-en">Maor Ben-Ami</div>
+        </div>
+        <div class="ccard-count">International Artist</div>
+      </div>
+      <div class="ccard-tags">
+        <span class="ctag">לימוד</span>
+        <span class="ctag">בינלאומי</span>
+        <span class="ctag ctag-era">Since Age 14</span>
+      </div>
+      <div class="ccard-desc en">Maor Ben-Ami is a widely celebrated teacher, choreographer, and keeper of dance memory. Teaching continuously since he was 14, he has led classes across the world, built a reputation for an unbelievable recall of repertoire, and brought warmth, precision, and living history into every room he enters. His choreographies carry both freshness and deep lineage.</div>
+      <div class="ccard-desc he" style="display:none">מאור בן־עמי הוא מרקיד, כוריאוגרף ושומר זיכרון ריקודי עם מן השורה הראשונה. מאז גיל 14 הוא מלמד ברצף, הוביל סדנאות והרקדות ברחבי העולם, ונודע בזיכרון בלתי נתפס של רפרטואר, בסיפור היסטורי עשיר ובנוכחות בינלאומית מעוררת השראה. הריקודים שלו מחברים רעננות למסורת עמוקה.</div>
+      <a class="ccard-cta" href="library.html?choreo=Maor%20Ben-Ami">
+        <span class="en">Explore Maor's Dances →</span>
+        <span class="he" style="display:none">לריקודים של מאור ←</span>
+      </a>
+    </div>
+
     <!-- MEIR SHEM TOV -->
     <div class="ccard">
       <div class="ccard-head">
@@ -1601,8 +1602,8 @@ footer{
 
   <div class="choreo-cta-wrap">
     <a class="hero-cta" href="library.html">
-      <span class="en">Browse All 1,940 Videos →</span>
-      <span class="he" style="display:none">לכל 1,940 הסרטונים ←</span>
+      <span class="en">Browse All 1,070 Videos →</span>
+      <span class="he" style="display:none">לכל 1,070 הסרטונים ←</span>
     </a>
   </div>
 </section>
@@ -1616,7 +1617,7 @@ footer{
     <a href="library.html" class="en">📚 Full Video Library</a>
     <a href="https://www.youtube.com/@DanceNissim" target="_blank">YouTube @DanceNissim</a>
   </div>
-  <div class="ft-credit">Made with ❤️ for the global Israeli folk dance community · 1,940 videos</div>
+  <div class="ft-credit">Made with ❤️ for the global Israeli folk dance community · 1,070 videos</div>
 </footer>
 
 <!-- ══ MODAL ═══════════════════════════════════════════════ -->
@@ -1768,6 +1769,7 @@ function applyLanguage(){
   syncLibraryLinks();
   rebuildChoreoSelect();
   updatePreviewSortLabel();
+  updateRandomQuote();
   rebuildPreviews();
 }
 
@@ -4101,7 +4103,33 @@ const VIDEOS=BASE_VIDEOS.map(v=>{
   };
 });
 
+const DISPLAY_LIBRARY_TOTAL=1070;
+const DANCE_QUOTES={
+  en:[
+    'Every circle begins with one brave step.',
+    'A folk dance carries a village inside its rhythm.',
+    'When the feet remember, the heart follows.',
+    'Dance turns memory into something the body can keep.',
+    'A shared step can say what words never finish.',
+    'Tradition stays alive when joy keeps moving.',
+    'The floor becomes a map when dancers move together.',
+    'Music teaches the step, but community gives it meaning.',
+    'A good dance leaves room for both history and surprise.'
+  ],
+  he:[
+    'כל מעגל מתחיל בצעד אמיץ אחד.',
+    'ריקוד עם נושא בתוכו כפר שלם של זיכרון.',
+    'כשהרגליים זוכרות, הלב מצטרף.',
+    'הריקוד הופך זיכרון למשהו שהגוף יודע לשמור.',
+    'צעד משותף אומר לפעמים יותר ממילים.',
+    'המסורת חיה כל עוד השמחה ממשיכה לנוע.',
+    'רחבת הריקודים נעשית למפה כשכולם נעים יחד.',
+    'המוזיקה מלמדת את הצעד, והקהילה נותנת לו משמעות.',
+    'ריקוד טוב משאיר מקום גם להיסטוריה וגם להפתעה.'
+  ]
+};
 let navFilter='all', choreoFilter='', searchQ='', previewSort='popular';
+let quoteIndex=Math.floor(Math.random()*DANCE_QUOTES.en.length);
 
 // ── TYPE COUNTS ──────────────────────────────────────────────────
 const counts={all:VIDEOS.length,dance:0,teaching:0,live:0,circle:0,couple:0};
@@ -4109,7 +4137,7 @@ VIDEOS.forEach(v=>{
   if(v.type==='dance')counts.dance++;else if(v.type==='teaching')counts.teaching++;else counts.live++;
   if(v.style==='m')counts.circle++;else if(v.style==='c')counts.couple++;
 });
-document.getElementById('navCnt').textContent=`${VIDEOS.length.toLocaleString()} videos`;
+document.getElementById('navCnt').textContent=`${DISPLAY_LIBRARY_TOTAL.toLocaleString()} videos`;
 
 // ── CHOREOGRAPHER DROPDOWN ────────────────────────────────────────
 (function buildChoreoSelect(){
@@ -4132,17 +4160,48 @@ function rebuildChoreoSelect(){
 }
 
 function updatePreviewSortLabel(){
-  const labels=lang==='he'
-    ?{popular:'מיון: פופולרי',az:'מיון: א-ת'}
-    :{popular:'Sort: Popular',az:'Sort: A–Z'};
-  const el=document.getElementById('previewSortLbl');
-  if(el)el.textContent=labels[previewSort];
+  const sel=document.getElementById('previewSortSelect');
+  if(!sel)return;
+  const options=lang==='he'
+    ?[
+      {value:'popular',label:'פופולריות'},
+      {value:'az',label:'א-ת'},
+      {value:'year',label:'שנה'}
+    ]
+    :[
+      {value:'popular',label:'Popularity'},
+      {value:'az',label:'Alphabetical'},
+      {value:'year',label:'Year'}
+    ];
+  sel.innerHTML=options.map(opt=>`<option value="${opt.value}">${opt.label}</option>`).join('');
+  sel.value=previewSort;
 }
 
-function cyclePreviewSort(){
-  previewSort=previewSort==='popular'?'az':'popular';
-  updatePreviewSortLabel();
+function setPreviewSort(value){
+  previewSort=value;
+  const sel=document.getElementById('previewSortSelect');
+  if(sel&&sel.value!==value)sel.value=value;
   rebuildPreviews();
+}
+
+function updateRandomQuote(){
+  const quote=lang==='he'?DANCE_QUOTES.he[quoteIndex]:DANCE_QUOTES.en[quoteIndex];
+  const textEl=document.getElementById('quoteText');
+  const bgEl=document.getElementById('quoteBg');
+  const attrEl=document.getElementById('quoteAttr');
+  if(textEl)textEl.textContent=`"${quote}"`;
+  if(bgEl)bgEl.textContent=quote;
+  if(attrEl)attrEl.textContent=lang==='he'?'מן הרוח של ריקודי העם':'From the spirit of folk dance';
+}
+
+function syncMobileFilterState(){
+  const nav=document.getElementById('stickyNav');
+  if(!nav)return;
+  if(window.innerWidth>640){
+    nav.classList.remove('filters-collapsed');
+    return;
+  }
+  nav.classList.toggle('filters-collapsed',window.scrollY>90);
 }
 
 // ── CARD BUILDER ─────────────────────────────────────────────────
@@ -4247,6 +4306,8 @@ function rebuildPreviews(){
   const pool=[...VIDEOS].filter(videoMatchesFilter);
   pool.sort((a,b)=>previewSort==='az'
     ?(a.he||a.en).localeCompare(b.he||b.en,'he')
+    :previewSort==='year'
+    ?(b.year||0)-(a.year||0)||b.vn-a.vn
     :b.vn-a.vn);
   const featureLimit=featuredCount();
   const featGrid=document.getElementById('featuredGrid');
@@ -4354,7 +4415,10 @@ window.addEventListener('resize',()=>{
     previewMode=next;
     rebuildPreviews();
   }
+  syncMobileFilterState();
 },{passive:true});
+window.addEventListener('scroll',syncMobileFilterState,{passive:true});
+syncMobileFilterState();
 </script>
 </body>
 </html>
