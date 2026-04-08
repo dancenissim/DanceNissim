@@ -946,12 +946,12 @@ footer{
   position:relative;
 }
 .timeline::before{
-  content:'';position:absolute;left:140px;top:0;bottom:0;width:1px;
+  content:'';position:absolute;left:136px;top:0;bottom:0;width:1px;
   background:linear-gradient(to bottom,transparent,rgba(201,162,39,.3) 10%,rgba(201,162,39,.3) 90%,transparent);
 }
 .tl-item{
-  display:grid;grid-template-columns:120px 30px 1fr;
-  gap:0 20px;margin-bottom:44px;align-items:start;
+  display:grid;grid-template-columns:120px 20px 1fr;
+  gap:0 12px;margin-bottom:44px;align-items:start;
 }
 .tl-dot{
   width:10px;height:10px;border-radius:50%;
@@ -962,7 +962,7 @@ footer{
 }
 .tl-year{
   font-size:13px;font-weight:700;color:var(--gold);
-  letter-spacing:.5px;padding-top:4px;padding-inline-end:12px;text-align:right;
+  letter-spacing:.5px;padding-top:4px;padding-inline-end:4px;text-align:right;
 }
 .tl-content{padding-left:14px}
 .tl-title{
@@ -994,6 +994,55 @@ footer{
 .hq-attr{position:relative;z-index:1;font-size:13px;color:var(--gold);letter-spacing:1px}
 .history-sub-prefix,.history-sub-rest{display:block}
 .history-sub-prefix{margin-bottom:4px}
+[dir=rtl] .timeline::before{
+  display:none;
+}
+[dir=rtl] .tl-item{
+  grid-template-columns:128px 1fr;
+  gap:0 18px;
+  align-items:stretch;
+}
+[dir=rtl] .tl-dot{
+  display:none;
+}
+[dir=rtl] .tl-year{
+  grid-column:1;
+  align-self:start;
+  justify-self:stretch;
+  text-align:center;
+  padding:12px 10px;
+  border-radius:999px;
+  border:1px solid rgba(201,162,39,.3);
+  background:linear-gradient(135deg,rgba(201,162,39,.14),rgba(255,255,255,.03));
+  color:var(--gold2);
+  font-size:12px;
+  line-height:1.25;
+  letter-spacing:.2px;
+  box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+[dir=rtl] .tl-content{
+  grid-column:2;
+  position:relative;
+  padding-left:0;
+  padding-right:0;
+  padding:18px 22px 18px 24px;
+  border:1px solid rgba(25,45,69,.78);
+  border-right:2px solid rgba(201,162,39,.34);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(8,15,29,.92),rgba(7,14,27,.86));
+}
+[dir=rtl] .tl-content::before{
+  content:'';
+  position:absolute;
+  top:20px;
+  right:-9px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:var(--gold);
+  border:3px solid var(--bg2);
+  box-shadow:0 0 0 6px rgba(201,162,39,.08);
+}
 
 @media(min-width:1100px){
   .nav-row2{gap:12px}
@@ -1007,6 +1056,21 @@ footer{
   .tl-item{grid-template-columns:80px 1fr;gap:0 14px}
   .tl-dot{display:none}
   .tl-year{font-size:12px;padding-inline-end:8px}
+  [dir=rtl] .tl-item{grid-template-columns:1fr;gap:10px}
+  [dir=rtl] .tl-year{
+    grid-column:auto;
+    justify-self:start;
+    min-width:120px;
+    padding:10px 14px;
+  }
+  [dir=rtl] .tl-content{
+    grid-column:auto;
+    padding:16px 18px;
+  }
+  [dir=rtl] .tl-content::before{
+    top:-9px;
+    right:18px;
+  }
   .history-section,.about-section{padding:52px 20px}
   .preview-section{padding:48px 16px 40px}
   #stickyNav.filters-collapsed .nav-row2{
@@ -1046,6 +1110,13 @@ footer{
 @media(max-width:480px){
   #stickyNav{gap:8px}
   #grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .hero-eyebrow{
+    gap:8px;
+    font-size:9px;
+    letter-spacing:1.4px;
+    white-space:nowrap;
+  }
+  .hero-eyebrow span{width:18px}
   .hero-main{letter-spacing:-1px}
   .hero-inner{padding:0 18px}
   .hero-stat-sep{height:30px}
@@ -1237,7 +1308,7 @@ footer{
         active to this day — a testament to his reach far beyond Israel's borders.
       </p>
       <p class="about-text en" style="margin-top:14px">
-        Beside him stands his son <strong style="color:var(--gold2)">Maor Ben-Ami</strong> — a
+        Beside him stands his son <strong style="color:var(--gold2)">Maor Ben Ami</strong> — a
         gifted choreographer and instructor in his own right who currently leads classes in Israel
         and carries the family tradition proudly into the next generation. Together they represent
         an unbroken line of passion, movement, and community.
@@ -1300,12 +1371,12 @@ footer{
     <h2 class="section-title en">Israeli Folk Dance — A Living Tradition</h2>
     <h2 class="section-title he" style="display:none" dir="rtl">ריקודי עם ישראלי — מסורת חיה</h2>
     <p class="section-sub en">From the earliest pioneer settlements to the global stage — the story of ריקודי עם</p>
-    <p class="section-sub he" style="display:none" dir="rtl"><span class="history-sub-prefix">מן</span><span class="history-sub-rest">החלוצים, דרך פסטיבלי דליה וכרמיאל, ועד הקהילות שרוקדות היום בכל העולם</span></p>
+    <p class="section-sub he" style="display:none" dir="rtl">מן החלוצים, דרך פסטיבלי דליה וכרמיאל, ועד הקהילות שרוקדות היום בכל העולם</p>
   </div>
   <div class="timeline">
     <div class="tl-item scroll-reveal">
       <div class="tl-dot"></div>
-      <div class="tl-year">1920s–40s</div>
+      <div class="tl-year"><span class="en">1920s–40s</span><span class="he" style="display:none" dir="rtl">1920–1940</span></div>
       <div class="tl-content">
         <h3 class="tl-title en">The Pioneer Era</h3>
         <p class="tl-text en">Israeli folk dance was born in the kibbutzim of pre-state Israel. Choreographers like <strong>Gurit Kadman</strong> and <strong>Rivka Sturman</strong> blended Eastern European Hora traditions with Middle Eastern rhythms, creating a uniquely Israeli identity through dance. The Hora circle became a symbol of collective joy and community spirit.</p>
@@ -1315,7 +1386,7 @@ footer{
     </div>
     <div class="tl-item scroll-reveal">
       <div class="tl-dot"></div>
-      <div class="tl-year">1948–70s</div>
+      <div class="tl-year"><span class="en">1948–70s</span><span class="he" style="display:none" dir="rtl">1948–1979</span></div>
       <div class="tl-content">
         <h3 class="tl-title en">The Golden Age</h3>
         <p class="tl-text en">After Israel's founding, folk dance exploded as a national art form. Festivals like the <strong>Karmiel Dance Festival</strong> drew thousands. Legendary choreographers including <strong>Yonatan Karmon</strong>, <strong>Shalom Hermon</strong>, and <strong>Moshe Eskayo</strong> created iconic dances still performed worldwide. The Debka, Yemenite step, and Mayim Mayim became internationally recognized symbols of Israeli culture.</p>
@@ -1325,7 +1396,7 @@ footer{
     </div>
     <div class="tl-item scroll-reveal">
       <div class="tl-dot"></div>
-      <div class="tl-year">1980s–90s</div>
+      <div class="tl-year"><span class="en">1980s–90s</span><span class="he" style="display:none" dir="rtl">1980–1999</span></div>
       <div class="tl-content">
         <h3 class="tl-title en">Choreographic Renaissance</h3>
         <p class="tl-text en">A new generation of choreographers — including <strong>Nissim Ben-Ami</strong> — brought fresh creativity, incorporating popular Israeli songs and modern movement vocabulary while honoring traditional forms. Couple dances (זוגות) became increasingly popular alongside the traditional circle formations (מעגלים), and the annual repertoire expanded to hundreds of new pieces.</p>
@@ -1335,7 +1406,7 @@ footer{
     </div>
     <div class="tl-item scroll-reveal">
       <div class="tl-dot"></div>
-      <div class="tl-year">2000s–Now</div>
+      <div class="tl-year"><span class="en">2000s–Now</span><span class="he" style="display:none" dir="rtl">2000–היום</span></div>
       <div class="tl-content">
         <h3 class="tl-title en">The Digital Age &amp; Global Community</h3>
         <p class="tl-text en">YouTube transformed Israeli folk dance into a truly global phenomenon. Instructors like Nissim made their teaching accessible to diaspora communities in North America, Europe, South America, and beyond. Today, Israeli folk dance thrives in over 50 countries, with weekly classes, festivals, and online communities keeping the tradition alive and evolving.</p>
@@ -1496,21 +1567,20 @@ footer{
     <div class="ccard">
       <div class="ccard-head">
         <div>
-          <div class="ccard-name he-name">מאור בן-עמי</div>
-          <div class="ccard-name-en">Maor Ben-Ami</div>
+          <div class="ccard-name he-name">מאור בן עמי</div>
+          <div class="ccard-name-en">Maor Ben Ami</div>
         </div>
-        <div class="ccard-count">International Artist</div>
+        <div class="ccard-count">13 videos</div>
       </div>
       <div class="ccard-tags">
         <span class="ctag">לימוד</span>
         <span class="ctag">בינלאומי</span>
-        <span class="ctag ctag-era">Since Age 14</span>
       </div>
-      <div class="ccard-desc en">Maor Ben-Ami is a widely celebrated teacher, choreographer, and keeper of dance memory. Teaching continuously since he was 14, he has led classes across the world, built a reputation for an unbelievable recall of repertoire, and brought warmth, precision, and living history into every room he enters. His choreographies carry both freshness and deep lineage.</div>
+      <div class="ccard-desc en">Maor Ben Ami is a widely celebrated teacher, choreographer, and keeper of dance memory. Teaching continuously since he was 14, he has led classes across the world, built a reputation for an unbelievable recall of repertoire, and brought warmth, precision, and living history into every room he enters. His choreographies carry both freshness and deep lineage.</div>
       <div class="ccard-desc he" style="display:none">מאור בן־עמי הוא מרקיד, כוריאוגרף ושומר זיכרון ריקודי עם מן השורה הראשונה. מאז גיל 14 הוא מלמד ברצף, הוביל סדנאות והרקדות ברחבי העולם, ונודע בזיכרון בלתי נתפס של רפרטואר, בסיפור היסטורי עשיר ובנוכחות בינלאומית מעוררת השראה. הריקודים שלו מחברים רעננות למסורת עמוקה.</div>
       <a class="ccard-cta" href="library.html?choreo=Maor%20Ben-Ami">
-        <span class="en">Explore Maor's Dances →</span>
-        <span class="he" style="display:none">לריקודים של מאור ←</span>
+        <span class="en">Explore 13 Dances →</span>
+        <span class="he" style="display:none">13 ריקודים ←</span>
       </a>
     </div>
 
