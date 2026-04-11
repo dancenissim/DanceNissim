@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>ריקודי ניסים · Dance Nissim · Israeli Folk Dance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -686,6 +687,38 @@ body{font-family:var(--f);background:var(--bg);color:var(--text);min-height:100v
 #mClose:hover{background:rgba(255,255,255,.12);color:var(--text);border-color:rgba(201,162,39,.4)}
 #mVid{position:relative;padding-top:56.25%;background:#000;border-radius:22px 22px 0 0;overflow:hidden}
 #mVid iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+#mVid.file-mode iframe{display:none}
+#mFileMode{
+  position:absolute;inset:0;display:none;
+  padding:28px;
+  background:
+    radial-gradient(circle at top,rgba(201,162,39,.16),transparent 42%),
+    linear-gradient(180deg,#0a1324 0%,#050b16 100%);
+  color:var(--text);
+  align-items:center;justify-content:center;text-align:center;
+}
+#mVid.file-mode #mFileMode{display:flex}
+.mfile-card{
+  max-width:560px;
+  padding:24px 26px;
+  background:rgba(4,8,16,.68);
+  border:1px solid rgba(201,162,39,.22);
+  border-radius:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+.mfile-kicker{
+  font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--gold2);margin-bottom:10px;
+}
+.mfile-title{font-size:24px;font-weight:800;line-height:1.2;margin-bottom:10px}
+.mfile-text{font-size:14px;line-height:1.7;color:#9ab5cc}
+.mfile-link{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-top:16px;padding:10px 18px;border-radius:999px;
+  background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);
+  color:var(--gold2);text-decoration:none;font-size:13px;font-weight:700;
+}
+.mfile-link:hover{background:rgba(201,162,39,.18)}
 #mBody{padding:28px 30px 34px}
 #mTags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .mt{font-size:10px;font-weight:700;padding:5px 13px;border-radius:100px;text-transform:uppercase;letter-spacing:1px}
@@ -1671,10 +1704,8 @@ footer{
   </div><!-- /choreo-grid -->
 
   <div class="choreo-cta-wrap">
-    <a class="hero-cta" href="library.html">
-      <span class="en">Browse All 1,070 Videos →</span>
-      <span class="he" style="display:none">לכל 1,070 הסרטונים ←</span>
-    </a>
+    <a class="hero-cta en" href="library.html">Browse All 1,070 Videos →</a>
+    <a class="hero-cta he" style="display:none" href="library.html?lang=he">לכל 1,070 הסרטונים ←</a>
   </div>
 </section>
 
@@ -1695,8 +1726,9 @@ footer{
   <div id="mBox">
     <button id="mClose" onclick="closeModal()">✕</button>
     <div id="mVid">
-      <iframe id="mIframe" allowfullscreen
+      <iframe id="mIframe" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"
         allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"></iframe>
+      <div id="mFileMode" aria-live="polite"></div>
     </div>
     <div id="mBody">
       <div id="mTags"></div>
@@ -4408,31 +4440,72 @@ function revealMoreVideos(){
 
 // ── MODAL ────────────────────────────────────────────────────────
 function buildSongHtml(v){
-  if(v.song){
+  if(v.song&&v.song.lyrics&&v.song.lyrics.length){
     const s=v.song;
     return `<div class="song-panel">
-      <div class="sp-title">🎵 Song Information</div>
+      <div class="sp-title">${lang==='he'?'🎵 פרטי השיר':'🎵 Song Information'}</div>
       <div class="sp-meta">
-        <div class="sp-mi"><strong>Song:</strong> ${s.title}${s.titleHe?` · ${s.titleHe}`:''}</div>
-        ${s.performer?`<div class="sp-mi"><strong>Performer:</strong> ${s.performer}</div>`:''}
+        <div class="sp-mi"><strong>${lang==='he'?'שיר':'Song'}:</strong> ${lang==='he'?(s.titleHe||s.title):(s.title||s.titleHe||'')}${s.title&&s.titleHe&&s.title!==s.titleHe?` · ${lang==='he'?s.title:s.titleHe}`:''}</div>
+        ${s.performer?`<div class="sp-mi"><strong>${lang==='he'?'מבצע':'Performer'}:</strong> ${s.performer}</div>`:''}
       </div>
       ${s.note?`<div class="sp-note">${s.note}</div>`:''}
-      ${s.lyrics&&s.lyrics.length?`<div class="lyr-hdr"><div>Hebrew</div><div>Phonetic</div><div>English</div></div>
-        <div class="lyr-body">${s.lyrics.map(r=>`<div class="lyr-row">
-          <div class="lyr-cell lc-he">${r.he}</div>
-          <div class="lyr-cell lc-rom">${r.rom}</div>
-          <div class="lyr-cell lc-en">${r.en}</div>
-        </div>`).join('')}</div>`:''}
+      <div class="lyr-hdr"><div>${lang==='he'?'עברית':'Hebrew'}</div><div>${lang==='he'?'פונטי':'Phonetic'}</div><div>${lang==='he'?'אנגלית':'English'}</div></div>
+      <div class="lyr-body">${s.lyrics.map(r=>`<div class="lyr-row">
+        <div class="lyr-cell lc-he">${r.he}</div>
+        <div class="lyr-cell lc-rom">${r.rom}</div>
+        <div class="lyr-cell lc-en">${r.en}</div>
+      </div>`).join('')}</div>
     </div>`;
   }
-  return `<div class="song-panel">
-    <div class="sp-title">🎵 Song Information</div>
-    <div class="sp-note">Lyrics are ready to display here once a song entry is added for this dance.</div>
+  return '';
+}
+
+function buildYouTubeEmbedUrl(videoId){
+  const url=new URL(`https://www.youtube.com/embed/${videoId}`);
+  url.searchParams.set('autoplay','1');
+  url.searchParams.set('rel','0');
+  url.searchParams.set('modestbranding','1');
+  if(location.protocol==='http:'||location.protocol==='https:'){
+    url.searchParams.set('origin',location.origin);
+    url.searchParams.set('widget_referrer',location.href.split('#')[0]);
+  }
+  return url.toString();
+}
+
+function buildLocalFileMessage(videoId){
+  const watchUrl=`https://www.youtube.com/watch?v=${videoId}`;
+  return `<div class="mfile-card">
+    <div class="mfile-kicker">${lang==='he'?'הפעלת וידאו במחשב':'Desktop Playback Setup'}</div>
+    <div class="mfile-title">${lang==='he'?'החלון נשאר באתר, אבל YouTube חוסם הטמעה מקבצים מקומיים.':'This popup stays on the site, but YouTube blocks embeds from local files.'}</div>
+    <div class="mfile-text">${lang==='he'?'כאשר הדף נפתח כקובץ <code>file://</code> במחשב, YouTube לא מקבל את כתובת ההפניה שהוא דורש ולכן הנגן לא יכול להיטען בתוך החלון. אם פותחים את האתר דרך כתובת רגילה כמו <code>http://localhost</code> או דרך הדומיין החי, הווידאו ינוגן כאן בתוך החלון.':'When this page is opened as a <code>file://</code> page on desktop, YouTube does not receive the HTTP referrer it now requires for embedded playback, so the player cannot load inside the modal. If you open the site through a normal web address like <code>http://localhost</code> or your live domain, the video will play here in the popup.'}</div>
+    <a class="mfile-link" href="${watchUrl}" target="_blank" rel="noopener">${lang==='he'?'פתח את הווידאו ב-YouTube':'Open This Video on YouTube'}</a>
   </div>`;
 }
 
+function getEraLabel(era){
+  if(lang==='he'){
+    if(era==='classic')return 'קלאסי (לפני 1970)';
+    if(era==='golden')return 'תור הזהב (1970–99)';
+    return 'מודרני (2000+)';
+  }
+  if(era==='classic')return 'Classic (pre-1970)';
+  if(era==='golden')return 'Golden Age (1970–99)';
+  return 'Modern (2000+)';
+}
+
 function openModal(v){
-  document.getElementById('mIframe').src=`https://www.youtube.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1`;
+  const iframe=document.getElementById('mIframe');
+  const videoWrap=document.getElementById('mVid');
+  const fileMode=document.getElementById('mFileMode');
+  const isLocalFile=location.protocol==='file:';
+  videoWrap.classList.toggle('file-mode',isLocalFile);
+  if(isLocalFile){
+    iframe.src='';
+    fileMode.innerHTML=buildLocalFileMessage(v.id);
+  }else{
+    fileMode.innerHTML='';
+    iframe.src=buildYouTubeEmbedUrl(v.id);
+  }
   const typeLabel=getTypeLabel(v.type,true);
   const typeClass=`mt-${v.type==='dance'?'d':v.type==='teaching'?'t':'l'}`;
   let tags=`<span class="mt ${typeClass}">${typeLabel}</span>`;
@@ -4444,20 +4517,20 @@ function openModal(v){
   document.getElementById('mRom').textContent=v.rom&&v.rom!==v.en?v.rom:'';
   document.getElementById('mEn').textContent=v.en||'';
   const choreoLabel=getChoreoDisplay({en:v.choreoEn,he:v.choreoHe});
-  document.getElementById('mSub').textContent=choreoLabel?`Choreography: ${choreoLabel}`:'';
+  document.getElementById('mSub').textContent=choreoLabel?(lang==='he'?`כוריאוגרפיה: ${choreoLabel}`:`Choreography: ${choreoLabel}`):'';
   const infos=[];
-  if(v.year)infos.push({l:'Year',v:v.year});
-  if(v.views)infos.push({l:'Views',v:v.views});
-  if(choreoLabel)infos.push({l:'Choreographer',v:choreoLabel});
-  infos.push({l:'Type',v:typeLabel});
-  if(v.era)infos.push({l:'Era',v:v.era==='classic'?'Classic (pre-1970)':v.era==='golden'?'Golden Age (1970–99)':'Modern (2000+)'});
+  if(v.year)infos.push({l:lang==='he'?'שנה':'Year',v:v.year});
+  if(v.views)infos.push({l:lang==='he'?'צפיות':'Views',v:v.views});
+  if(choreoLabel)infos.push({l:lang==='he'?'כוריאוגרף':'Choreographer',v:choreoLabel});
+  infos.push({l:lang==='he'?'סוג':'Type',v:typeLabel});
+  if(v.era)infos.push({l:lang==='he'?'תקופה':'Era',v:getEraLabel(v.era)});
   document.getElementById('mInfo').innerHTML=infos.map(i=>`<div class="mib"><div class="mil">${i.l}</div><div class="miv">${i.v}</div></div>`).join('');
   document.getElementById('mSong').innerHTML=buildSongHtml(v);
   const heKey=v.he.replace(/[- ·•]+.*/,'').trim();
   const pairs=VIDEOS.filter(p=>p.id!==v.id&&heKey.length>2&&(p.he.startsWith(heKey)||p.he===v.he)).slice(0,4);
   document.getElementById('mPairs').innerHTML=pairs.length
-    ?`<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;width:100%">Related Videos</div>`
-      +pairs.map(p=>`<button class="pb" onclick="openModal(VIDEOS.find(x=>x.id==='${p.id}'))">${p.type==='dance'?'🎬':p.type==='teaching'?'📖':'🎭'} ${p.en||p.he}</button>`).join('')
+    ?`<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;width:100%">${lang==='he'?'סרטונים קשורים':'Related Videos'}</div>`
+      +pairs.map(p=>`<button class="pb" onclick="openModal(VIDEOS.find(x=>x.id==='${p.id}'))">${p.type==='dance'?'🎬':p.type==='teaching'?'📖':'🎭'} ${lang==='he'?(p.he||p.en):(p.en||p.he)}</button>`).join('')
     :'';
   document.getElementById('mDesc').textContent='';
   document.getElementById('mOverlay').classList.add('on');
@@ -4466,6 +4539,8 @@ function openModal(v){
 function closeModal(){
   document.getElementById('mOverlay').classList.remove('on');
   document.getElementById('mIframe').src='';
+  document.getElementById('mVid').classList.remove('file-mode');
+  document.getElementById('mFileMode').innerHTML='';
   document.body.style.overflow='';
 }
 function bgClose(e){if(e.target===document.getElementById('mOverlay'))closeModal();}
